@@ -126,7 +126,7 @@ bone-age-assessment/
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/ak7180979/bone-age-assessment.git
+git clone https://github.com/PoweredwithAI/Bone-age-XRay-preprocessing-DL-comparison.git
 cd bone-age-assessment
 pip install -r requirements.txt
 ```
