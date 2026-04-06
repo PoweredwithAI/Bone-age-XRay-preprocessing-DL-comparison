@@ -1,0 +1,46 @@
+# ─── preprocessing.yaml ──────────────────────────────────────────────────────
+# All tuneable parameters for the image preprocessing pipeline.
+# Import with: import yaml; cfg = yaml.safe_load(open("configs/preprocessing.yaml"))
+
+dataset:
+  csv_path:  "/kaggle/input/datasets/kmader/rsna-bone-age/boneage-training-dataset.csv"
+  img_dir:   "/kaggle/input/datasets/kmader/rsna-bone-age/boneage-training-dataset/boneage-training-dataset"
+
+enhancement:
+  dull_threshold: 50       # Images with mean pixel value < this receive CLAHE
+  clahe_clip:     2.0      # CLAHE clip limit
+  clahe_tile:     [8, 8]   # CLAHE tile grid size
+  percentile_low:  1       # Lower percentile for intensity clipping
+  percentile_high: 99      # Upper percentile for intensity clipping
+  force_enhance:  false    # true → apply CLAHE to ALL images (not just dull ones)
+
+  output_dir:  "/kaggle/working/RSNAboneageenhancedtrainingdataset"
+  csv_out:     "/kaggle/working/RSNAboneageenhancedtrainingdataset/RSNAboneageenhancedtrainingdataset.csv"
+
+fscnn:
+  checkpoint:  "/kaggle/input/datasets/ak7180979/masking-checkpoint/fscnnrsnahand2.ckpt"
+  input_size:  512         # Model input resolution (H = W)
+  n_classes:   2           # Background + hand
+  lr:          0.001
+  max_epochs:  40
+  batch_size:  4
+  val_split:   0.10        # Fraction of RGBA images held out for validation
+
+  rgba_dir:    "/kaggle/working/rsna-fscnn-train-rgba"
+  data_dir:    "/kaggle/working/rsna-fscnn-data"
+  ckpt_out:    "/kaggle/working/fscnn-rsna-hand.ckpt"
+
+artifact_removal:
+  strategy:    "blackout"  # "blackout" or "inpaint"
+  mask_thresh: 0.50        # Foreground probability threshold for binarisation
+  input_size:  512
+
+  output_dir:  "/kaggle/working/RSNAboneagecleanedtrainingdataset"
+  csv_out:     "/kaggle/working/RSNAboneagecleaned/RSNAboneagecleanedtrainingdataset.csv"
+
+kaggle_datasets:
+  raw:      "kmader/rsna-bone-age"
+  enhanced: "ak7180979/preprocessed-rsna-boneage-xrays"
+  cleaned:  "ak7180979/delabeled-rsna-boneage-xrays"
+  masks:    "ak7180979/rsna-bone-age-masks"
+  ckpt:     "ak7180979/masking-checkpoint"
