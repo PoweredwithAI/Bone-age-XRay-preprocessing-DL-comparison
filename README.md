@@ -160,21 +160,21 @@ Or run the full notebook:
 
 ***
 ## Results (Phase 1 — Pre-processing)
-
+- ### Sample Raw X-Rays
 - ![Sample Raw XRays](results/figures/Raw_XRays.png)
    - A sample pull shows --> Variation in contrasts and brightness, hand positions are not uniform, and labels and artifacts are in random positions. Sizes also varies.
-
+- ### Sample CLHAE Enhanced XRays
 - ![CLAHE Enhanced XRays](results/figures/Enhanced_XRays.png)
    - Improved image quality especially for darker X-Rays. 
    - However backgrounds can get over exposed where the difference between the hand and the background is less prominant.
    - As next steps, a change in hyperparameters (clip limits) may be explored along with anditional pre-processing to focus on the region-of-interest and improve normalization in X-Rays with narrow intensity distributions.
-
+- ### Comparison across preprocessing of sample images
 - ![Raw vs Enhanced vs Cleaned XRays](results/figures/Raw_vs_Enhanced_vs_Cleaned.png)
    - The FSCNN enabled automatic mask creation and removal of labels and artifacts from the X-Rays.
    - However the cleaned X-Rays were also largely clipped on the finger tips.
    - Over-exposure in case of X-Rays with narrow intensity distributions had downstream impact with masks diverging from actual hand.   
-
-![DICE Plot](results/figures/FSCNN_vs_Manual_Mask-DICE_Plot.png)
+- ### DICE Score Evaluation
+- ![DICE Plot](results/figures/FSCNN_vs_Manual_Mask-DICE_Plot.png)
    - The FSCNN scored a mean DICE score of 92.79% (68.83%-96.62%) against the 528 manual masks.
    - This is lower than the 99% scored by the authors of Deeplasia who used an ensemble of three models
    - The sample distribution of DICE Scores is
@@ -183,8 +183,8 @@ Or run the full notebook:
       - DICE ≥ 0.90  (%)    : 87.1%
       - DICE  < 0.90 (%)    : 12.9% 
    - As next steps, improved pre-processing, experiments with different hyperparamters and models should be done to improve masking and consequent artifact removal.   
-
-![Worst DICE Masks](results/figures/Worst_DICE_plots.png)
+- ### Worst Masks
+- ![Worst DICE Masks](results/figures/Worst_DICE_plots.png)
    - Six masks with lowest DICE scores were plotted to develop insights. 
    - These six X-Rays fell in one of the below categories
       - X-Rays with uneven exposures (13130.png)
